@@ -37,11 +37,12 @@ public class Enemy : MonoBehaviour {
                 }
             }
 
-            else if (other.tag.CompareTo("Player") == 0)
-            {
-                m_life = 0;
-                Destroy(this.gameObject);
-            }
+            
+        }
+        else if (other.tag.CompareTo("Player") == 0)
+        {
+            m_life = 0;
+            Destroy(this.gameObject);
         }
     }
 
