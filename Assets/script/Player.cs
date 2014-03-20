@@ -9,6 +9,11 @@ public class Player : MonoBehaviour {
     public float m_rocketRate = 0;
     public float m_life = 3;
 
+    public AudioClip m_shootClip;
+
+    protected AudioSource m_audio;
+    public Transform m_explosionFX;
+
 	// Use this for initialization
 
     void OnTriggerEnter(Collider other)
@@ -18,12 +23,14 @@ public class Player : MonoBehaviour {
             m_life -= 1;
             if (m_life <= 0)
             {
+                Instantiate(m_explosionFX, m_transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
             }
         }
     }
 	void Start () {
         m_transform = this.transform;
+        m_audio = this.audio;
 	
 	}
 	
@@ -31,6 +38,7 @@ public class Player : MonoBehaviour {
 	void Update () {
         float movev = 0;
         float moveh = 0;
+
 
 
         if (Input.GetKey(KeyCode.UpArrow))
@@ -61,6 +69,7 @@ public class Player : MonoBehaviour {
             if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
         {
             Instantiate(m_rocket, m_transform.position, m_transform.rotation);
+            m_audio.PlayOneShot(m_shootClip);
         }
         }
 	}

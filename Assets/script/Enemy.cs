@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
+    public int m_point = 10;
+
     public float m_speed = 2;
     protected float m_rotSpeed = 30;
 
@@ -9,6 +11,8 @@ public class Enemy : MonoBehaviour {
     protected Transform m_transform;
 
     public float m_life = 10;
+
+    public Transform m_explosionFX;
 
     void OnTriggerEnter(Collider other)
     {
@@ -26,7 +30,10 @@ public class Enemy : MonoBehaviour {
 
                 if (m_life <= 0)
                 {
-                    Destroy(this.gameObject);
+                    GameManager.Instance.AddScore(m_point);
+
+                    Instantiate(m_explosionFX,m_transform.position, Quaternion.identity);
+                    Destroy(this.gameObject,0.1f);
                 }
             }
 
@@ -44,7 +51,7 @@ public class Enemy : MonoBehaviour {
 	
 	}
 
-    protected void UpdateMove()
+    protected virtual void UpdateMove()
     {
         m_timer -= Time.deltaTime;
         if (m_timer <= 0)
